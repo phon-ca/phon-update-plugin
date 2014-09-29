@@ -1,7 +1,10 @@
-package ca.phon.application.updater;
+package ca.phon.app.updater;
 
 import java.io.IOException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import ca.phon.util.PrefHelper;
 
 import com.install4j.api.launcher.ApplicationLauncher;
 import com.install4j.api.update.UpdateScheduleRegistry;
@@ -12,16 +15,37 @@ import com.install4j.api.update.UpdateScheduleRegistry;
  */
 public class UpdateChecker {
 	
+	private static final Logger LOGGER = Logger
+			.getLogger(UpdateChecker.class.getName());
+	
 	/** Update application id */
 	private final static String APP_ID = "PHON_UPDATER";
 	private final static String BG_APP_ID = "PHON_SILENT_UPDATER";
-//	private final static String SCHEDULER_ID = "408";
+	
+	public final static String UPDATE_URL = UpdateChecker.class.getName() + ".updateURL";
+	public final static String DEFAULT_UPDATE_URL = "https://www.phon.ca/downloads/phon/updates.xml";
+	
+	public static String getUpdateURL() {
+		return PrefHelper.get(UPDATE_URL, DEFAULT_UPDATE_URL);
+	}
 	
 	/**
 	 * Check for updates
 	 */
-	public static void checkForUpdates(String updateURL) {
+	public static void checkForUpdatesInBackground(String updateURL) {
 		checkForUpdates(updateURL, true);
+	}
+	
+	public static void checkForUpdatesInBackground() {
+		checkForUpdates(getUpdateURL(), true);
+	}
+	
+	public static void checkForUpdates(String updateURL) {
+		checkForUpdates(updateURL, false);
+	}
+	
+	public static void checkForUpdates() {
+		checkForUpdates(getUpdateURL(), false);
 	}
 	
 	/**
@@ -32,21 +56,16 @@ public class UpdateChecker {
 	public static void checkForUpdates(String updateURL, boolean checkInBackground) {
 		try {
 			if(checkInBackground) {
-//				Logger.getLogger(UpdateChecker.class.toString()).info("Checking update schedule...");
-//				if(UpdateScheduleRegistry.checkAndReset()) {
-					Logger.getLogger(UpdateChecker.class.toString()).info("Running updater....");
-					ApplicationLauncher.launchApplicationInProcess(BG_APP_ID, null, new ApplicationLauncher.Callback() {
-			            public void exited(int exitValue) {
-			            	Logger.getLogger(UpdateChecker.class.toString()).info("Update application exited with value " + exitValue);
-			            }
-			            
-			            public void prepareShutdown() {
-			            	Logger.getLogger(UpdateChecker.class.toString()).info("Updater is shutting down application.");
-			            }
-			        }, ApplicationLauncher.WindowMode.FRAME, null);
-//				} else {
-//					Logger.getLogger(UpdateChecker.class.toString()).info("Update is not scheduled.");
-//				}
+				Logger.getLogger(UpdateChecker.class.toString()).info("Running updater....");
+				ApplicationLauncher.launchApplicationInProcess(BG_APP_ID, null, new ApplicationLauncher.Callback() {
+		            public void exited(int exitValue) {
+		            	LOGGER.info("Update application exited with value " + exitValue);
+		            }
+		            
+		            public void prepareShutdown() {
+		            	LOGGER.info("Updater is shutting down application.");
+		            }
+		        }, ApplicationLauncher.WindowMode.FRAME, null);
 			} else {
 			    ApplicationLauncher.launchApplication(APP_ID, null, false, new ApplicationLauncher.Callback() {
 			            public void exited(int exitValue) {
@@ -58,28 +77,9 @@ public class UpdateChecker {
 			    );
 			}
 		} catch (IOException e) {
-		    e.printStackTrace();
+		    LOGGER.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 
 	}
-	
-//	/**
-//	 * Run the automatic update scheduler
-//	 */
-//	public static void runUpdateScheduler() {
-//		try {
-//			 ApplicationLauncher.launchApplication(SCHEDULER_ID, null, false, new ApplicationLauncher.Callback() {
-//		            public void exited(int exitValue) {
-//		            }
-//		            
-//		            public void prepareShutdown() {
-//		            }
-//		        }
-//		    );
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//	}
-//	
 
 }
