@@ -13,8 +13,8 @@ import com.install4j.api.update.UpdateScheduleRegistry;
 public class UpdateChecker {
 	
 	/** Update application id */
-	private final static String APP_ID = "365";
-	private final static String BG_APP_ID = "312";
+	private final static String APP_ID = "PHON_UPDATER";
+	private final static String BG_APP_ID = "PHON_SILENT_UPDATER";
 //	private final static String SCHEDULER_ID = "408";
 	
 	/**
@@ -35,7 +35,7 @@ public class UpdateChecker {
 //				Logger.getLogger(UpdateChecker.class.toString()).info("Checking update schedule...");
 //				if(UpdateScheduleRegistry.checkAndReset()) {
 					Logger.getLogger(UpdateChecker.class.toString()).info("Running updater....");
-					ApplicationLauncher.launchApplicationInProcess("312", null, new ApplicationLauncher.Callback() {
+					ApplicationLauncher.launchApplicationInProcess(BG_APP_ID, null, new ApplicationLauncher.Callback() {
 			            public void exited(int exitValue) {
 			            	Logger.getLogger(UpdateChecker.class.toString()).info("Update application exited with value " + exitValue);
 			            }
