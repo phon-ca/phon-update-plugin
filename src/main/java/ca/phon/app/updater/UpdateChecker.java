@@ -56,7 +56,7 @@ public class UpdateChecker {
 	public static void checkForUpdates(String updateURL, boolean checkInBackground) {
 		try {
 			if(checkInBackground) {
-				Logger.getLogger(UpdateChecker.class.toString()).info("Running updater....");
+				LOGGER.info("Running updater....");
 				ApplicationLauncher.launchApplicationInProcess(BG_APP_ID, null, new ApplicationLauncher.Callback() {
 		            public void exited(int exitValue) {
 		            	LOGGER.info("Update application exited with value " + exitValue);
