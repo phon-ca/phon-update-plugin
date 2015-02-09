@@ -23,7 +23,11 @@ public class UpdateChecker {
 	private final static String BG_APP_ID = "PHON_SILENT_UPDATER";
 	
 	public final static String UPDATE_URL = UpdateChecker.class.getName() + ".updateURL";
-	public final static String DEFAULT_UPDATE_URL = "https://www.phon.ca/downloads/phon/updates.xml";
+	public final static String DEFAULT_UPDATE_URL = "https://www.phon.ca/downloads/phon/updates2.xml";
+	
+	public final static String CHECK_FOR_UPDATE_PROP = "ca.phon.application.updater.checkOnStartup";
+	
+	public final static Boolean DEFAULT_CHECK_FOR_UPDATE = Boolean.FALSE;
 	
 	public static String getUpdateURL() {
 		return PrefHelper.get(UPDATE_URL, DEFAULT_UPDATE_URL);

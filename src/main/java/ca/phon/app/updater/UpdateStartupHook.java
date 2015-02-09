@@ -1,7 +1,7 @@
 package ca.phon.app.updater;
 
+
 import ca.phon.app.hooks.PhonStartupHook;
-import ca.phon.app.prefs.PhonProperties;
 import ca.phon.plugin.IPluginExtensionFactory;
 import ca.phon.plugin.IPluginExtensionPoint;
 import ca.phon.plugin.PhonPlugin;
@@ -13,7 +13,8 @@ public class UpdateStartupHook implements PhonStartupHook, IPluginExtensionPoint
 
 	@Override
 	public void startup() throws PluginException {
-		UpdateChecker.checkForUpdatesInBackground();
+		if(PrefHelper.getBoolean(UpdateChecker.CHECK_FOR_UPDATE_PROP, UpdateChecker.DEFAULT_CHECK_FOR_UPDATE))
+			UpdateChecker.checkForUpdatesInBackground();
 	}
 
 	@Override
