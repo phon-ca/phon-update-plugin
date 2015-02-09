@@ -59,7 +59,7 @@ public class UpdateChecker {
 	 */
 	public static void checkForUpdates(String updateURL, boolean checkInBackground) {
 		try {
-			if(checkInBackground) {
+			if(!checkInBackground) {
 				LOGGER.info("Running updater....");
 				ApplicationLauncher.launchApplicationInProcess(BG_APP_ID, null, new ApplicationLauncher.Callback() {
 		            public void exited(int exitValue) {
@@ -73,9 +73,11 @@ public class UpdateChecker {
 			} else {
 			    ApplicationLauncher.launchApplication(APP_ID, null, false, new ApplicationLauncher.Callback() {
 			            public void exited(int exitValue) {
+			            	LOGGER.info("Update application exited with value " + exitValue);
 			            }
 			            
 			            public void prepareShutdown() {
+			            	LOGGER.info("Updater is shutting down application.");
 			            }
 			        }
 			    );
