@@ -36,20 +36,20 @@ public class UpdateChecker {
 	/**
 	 * Check for updates
 	 */
-	public static void checkForUpdatesInBackground(String updateURL) {
-		checkForUpdates(updateURL, true);
+	public static void checkForUpdatesInBackground(boolean silent, String updateURL) {
+		checkForUpdates(updateURL, silent, true);
 	}
 	
 	public static void checkForUpdatesInBackground() {
-		checkForUpdates(getUpdateURL(), true);
+		checkForUpdates(getUpdateURL(), true, true);
 	}
 	
-	public static void checkForUpdates(String updateURL) {
-		checkForUpdates(updateURL, false);
+	public static void checkForUpdates(boolean silent, String updateURL) {
+		checkForUpdates(updateURL, silent, false);
 	}
 	
 	public static void checkForUpdates() {
-		checkForUpdates(getUpdateURL(), false);
+		checkForUpdates(getUpdateURL(), false, false);
 	}
 	
 	/**
@@ -57,11 +57,12 @@ public class UpdateChecker {
 	 * 
 	 * @param checkInBackground
 	 */
-	public static void checkForUpdates(String updateURL, boolean checkInBackground) {
+	public static void checkForUpdates(String updateURL, boolean silent, boolean checkInBackground) {
+		final String ID = (silent ? BG_APP_ID : APP_ID);
 		try {
 			if(!checkInBackground) {
 				LOGGER.info("Running updater....");
-				ApplicationLauncher.launchApplicationInProcess(BG_APP_ID, null, new ApplicationLauncher.Callback() {
+				ApplicationLauncher.launchApplicationInProcess(ID, null, new ApplicationLauncher.Callback() {
 		            public void exited(int exitValue) {
 		            	LOGGER.info("Update application exited with value " + exitValue);
 		            }
@@ -71,7 +72,7 @@ public class UpdateChecker {
 		            }
 		        }, ApplicationLauncher.WindowMode.FRAME, null);
 			} else {
-			    ApplicationLauncher.launchApplication(APP_ID, null, false, new ApplicationLauncher.Callback() {
+			    ApplicationLauncher.launchApplication(ID, null, false, new ApplicationLauncher.Callback() {
 			            public void exited(int exitValue) {
 			            	LOGGER.info("Update application exited with value " + exitValue);
 			            }
