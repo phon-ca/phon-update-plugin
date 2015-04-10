@@ -15,10 +15,7 @@ public class UpdateStartupHook implements PhonStartupHook, IPluginExtensionPoint
 	@Override
 	public void startup() throws PluginException {
 		if(PrefHelper.getBoolean(UpdateChecker.CHECK_FOR_UPDATE_PROP, UpdateChecker.DEFAULT_CHECK_FOR_UPDATE)) {
-			if(OSInfo.isMacOs())
-				UpdateChecker.checkForUpdates(UpdateChecker.getUpdateURL(), true, false);
-			else
-				UpdateChecker.checkForUpdatesInBackground();
+			UpdateChecker.checkForUpdates(UpdateChecker.getUpdateURL(), true, false);
 		}
 	}
 
