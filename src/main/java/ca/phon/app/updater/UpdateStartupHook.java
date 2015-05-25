@@ -6,8 +6,8 @@ import ca.phon.plugin.IPluginExtensionFactory;
 import ca.phon.plugin.IPluginExtensionPoint;
 import ca.phon.plugin.PhonPlugin;
 import ca.phon.plugin.PluginException;
-import ca.phon.util.OSInfo;
 import ca.phon.util.PrefHelper;
+import ca.phon.worker.PhonWorker;
 
 @PhonPlugin
 public class UpdateStartupHook implements PhonStartupHook, IPluginExtensionPoint<PhonStartupHook> {
@@ -15,7 +15,9 @@ public class UpdateStartupHook implements PhonStartupHook, IPluginExtensionPoint
 	@Override
 	public void startup() throws PluginException {
 		if(PrefHelper.getBoolean(UpdateChecker.CHECK_FOR_UPDATE_PROP, UpdateChecker.DEFAULT_CHECK_FOR_UPDATE)) {
-			UpdateChecker.checkForUpdates(UpdateChecker.getUpdateURL(), true, false);
+			PhonWorker.getInstance().invokeLater(() -> {
+				UpdateChecker.checkForUpdates(UpdateChecker.getUpdateURL(), true, false);
+			});
 		}
 	}
 

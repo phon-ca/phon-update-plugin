@@ -67,7 +67,7 @@
 
 	<!-- Dependency versions -->
 	<com.ejtechnologies.i4jruntime.version>6.0</com.ejtechnologies.i4jruntime.version>
-    <ca.phon.phon-app.version>2.0.5</ca.phon.phon-app.version>
+    <ca.phon.phon-app.version>2.1.0</ca.phon.phon-app.version>
     
     <!-- Plugin versions -->
     <org.apache.maven.plugins.maven-compiler-plugin.version>3.1</org.apache.maven.plugins.maven-compiler-plugin.version>
@@ -102,5 +102,5 @@
 
     </plugins>
   </build>
-  <version>3</version>
+  <version>4</version>
 </project>
