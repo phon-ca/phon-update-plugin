@@ -7,7 +7,6 @@ import java.util.logging.Logger;
 import ca.phon.util.PrefHelper;
 
 import com.install4j.api.launcher.ApplicationLauncher;
-import com.install4j.api.update.UpdateScheduleRegistry;
 
 /**
  * Check for updates using the install4j update application.
@@ -23,7 +22,7 @@ public class UpdateChecker {
 	private final static String BG_APP_ID = "PHON_SILENT_UPDATER";
 	
 	public final static String UPDATE_URL = UpdateChecker.class.getName() + ".updateURL";
-	public final static String DEFAULT_UPDATE_URL = "https://www.phon.ca/downloads/phon/updates2.xml";
+	public final static String DEFAULT_UPDATE_URL = "https://www.phon.ca/downloads/phon/updates2.1.xml";
 	
 	public final static String CHECK_FOR_UPDATE_PROP = "ca.phon.application.updater.checkOnStartup";
 	
@@ -59,9 +58,9 @@ public class UpdateChecker {
 	 */
 	public static void checkForUpdates(String updateURL, boolean silent, boolean checkInBackground) {
 		final String ID = (silent ? BG_APP_ID : APP_ID);
+		LOGGER.info("Running updater....");
 		try {
 			if(!checkInBackground) {
-				LOGGER.info("Running updater....");
 				ApplicationLauncher.launchApplicationInProcess(ID, null, new ApplicationLauncher.Callback() {
 		            public void exited(int exitValue) {
 		            	LOGGER.info("Update application exited with value " + exitValue);

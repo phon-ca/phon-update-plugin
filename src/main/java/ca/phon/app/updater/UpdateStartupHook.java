@@ -11,13 +11,17 @@ import ca.phon.worker.PhonWorker;
 
 @PhonPlugin
 public class UpdateStartupHook implements PhonStartupHook, IPluginExtensionPoint<PhonStartupHook> {
-
+	
 	@Override
 	public void startup() throws PluginException {
 		if(PrefHelper.getBoolean(UpdateChecker.CHECK_FOR_UPDATE_PROP, UpdateChecker.DEFAULT_CHECK_FOR_UPDATE)) {
-			PhonWorker.getInstance().invokeLater(() -> {
-				UpdateChecker.checkForUpdates(UpdateChecker.getUpdateURL(), true, false);
+			final PhonWorker worker = PhonWorker.createWorker();
+			worker.setName("Automatic Updater");
+			worker.setFinishWhenQueueEmpty(true);
+			worker.invokeLater(() -> {
+				UpdateChecker.checkForUpdates(UpdateChecker.getUpdateURL(), true, true);
 			});
+			worker.start();
 		}
 	}
 
