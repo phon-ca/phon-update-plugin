@@ -13,47 +13,47 @@ import com.install4j.api.launcher.ApplicationLauncher;
  *
  */
 public class UpdateChecker {
-	
+
 	private static final Logger LOGGER = Logger
 			.getLogger(UpdateChecker.class.getName());
-	
+
 	/** Update application id */
 	private final static String APP_ID = "PHON_UPDATER";
 	private final static String BG_APP_ID = "PHON_SILENT_UPDATER";
-	
+
 	public final static String UPDATE_URL = UpdateChecker.class.getName() + ".updateURL";
 	public final static String DEFAULT_UPDATE_URL = "https://www.phon.ca/downloads/phon/updates2.1.xml";
-	
+
 	public final static String CHECK_FOR_UPDATE_PROP = "ca.phon.application.updater.checkOnStartup";
-	
-	public final static Boolean DEFAULT_CHECK_FOR_UPDATE = Boolean.FALSE;
-	
+
+	public final static Boolean DEFAULT_CHECK_FOR_UPDATE = Boolean.TRUE;
+
 	public static String getUpdateURL() {
 		return PrefHelper.get(UPDATE_URL, DEFAULT_UPDATE_URL);
 	}
-	
+
 	/**
 	 * Check for updates
 	 */
 	public static void checkForUpdatesInBackground(boolean silent, String updateURL) {
 		checkForUpdates(updateURL, silent, true);
 	}
-	
+
 	public static void checkForUpdatesInBackground() {
 		checkForUpdates(getUpdateURL(), true, true);
 	}
-	
+
 	public static void checkForUpdates(boolean silent, String updateURL) {
 		checkForUpdates(updateURL, silent, false);
 	}
-	
+
 	public static void checkForUpdates() {
 		checkForUpdates(getUpdateURL(), false, false);
 	}
-	
+
 	/**
 	 * Check for updates
-	 * 
+	 *
 	 * @param checkInBackground
 	 */
 	public static void checkForUpdates(String updateURL, boolean silent, boolean checkInBackground) {
@@ -65,7 +65,7 @@ public class UpdateChecker {
 		            public void exited(int exitValue) {
 		            	LOGGER.info("Update application exited with value " + exitValue);
 		            }
-		            
+
 		            public void prepareShutdown() {
 		            	LOGGER.info("Updater is shutting down application.");
 		            }
@@ -75,7 +75,7 @@ public class UpdateChecker {
 			            public void exited(int exitValue) {
 			            	LOGGER.info("Update application exited with value " + exitValue);
 			            }
-			            
+
 			            public void prepareShutdown() {
 			            	LOGGER.info("Updater is shutting down application.");
 			            }
