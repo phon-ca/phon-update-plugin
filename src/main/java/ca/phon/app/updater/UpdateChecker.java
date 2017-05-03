@@ -72,15 +72,14 @@ public class UpdateChecker {
 		        }, ApplicationLauncher.WindowMode.FRAME, null);
 			} else {
 			    ApplicationLauncher.launchApplication(ID, null, false, new ApplicationLauncher.Callback() {
-			            public void exited(int exitValue) {
-			            	LOGGER.info("Update application exited with value " + exitValue);
-			            }
+		            public void exited(int exitValue) {
+		            	LOGGER.info("Update application exited with value " + exitValue);
+		            }
 
-			            public void prepareShutdown() {
-			            	LOGGER.info("Updater is shutting down application.");
-			            }
-			        }
-			    );
+		            public void prepareShutdown() {
+		            	LOGGER.info("Updater is shutting down application.");
+		            }
+		        } );
 			}
 		} catch (IOException e) {
 		    LOGGER.log(Level.SEVERE, e.getLocalizedMessage(), e);
