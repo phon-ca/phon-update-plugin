@@ -41,6 +41,10 @@
       <name>libs-snapshot</name>
       <url>https://www.phon.ca/artifacts/libs-snapshot</url>
     </repository>
+    <repository>
+	    <id>ej-technologies</id>
+	    <url>https://maven.ej-technologies.com/repository</url>
+    </repository>
   </repositories>
   <pluginRepositories>
     <pluginRepository>
@@ -66,7 +70,7 @@
     <project.build.targetVersion>1.8</project.build.targetVersion>
 
 	<!-- Dependency versions -->
-	<com.ejtechnologies.i4jruntime.version>6.0</com.ejtechnologies.i4jruntime.version>
+	<com.install4j.install4j-runtime.version>7.0.1</com.install4j.install4j-runtime.version>
     <ca.phon.phon-app.version>2.1.0</ca.phon.phon-app.version>
     
     <!-- Plugin versions -->
@@ -76,8 +80,8 @@
   <dependencies>
 	<dependency>
 	  <groupId>com.install4j</groupId>
-	  <artifactId>i4jruntime</artifactId>
-	  <version>${com.ejtechnologies.i4jruntime.version}</version>
+	  <artifactId>install4j-runtime</artifactId>
+	  <version>${com.install4j.install4j-runtime.version}</version>
 	</dependency>
     <dependency>
       <groupId>ca.phon</groupId>
@@ -102,5 +106,5 @@
 
     </plugins>
   </build>
-  <version>5</version>
+  <version>6</version>
 </project>
