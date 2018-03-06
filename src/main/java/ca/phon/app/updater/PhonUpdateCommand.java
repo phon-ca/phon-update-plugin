@@ -18,7 +18,7 @@ public class PhonUpdateCommand extends HookableAction {
 	
 	@Override
 	public void hookableActionPerformed(ActionEvent ae) {
-		UpdateChecker.checkForUpdates();
+		PhonUpdateChecker.checkForUpdates();
 	}
 
 }

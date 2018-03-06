@@ -12,16 +12,16 @@ import com.install4j.api.launcher.ApplicationLauncher;
  * Check for updates using the install4j update application.
  *
  */
-public class UpdateChecker {
+public class PhonUpdateChecker {
 
 	private static final Logger LOGGER = Logger
-			.getLogger(UpdateChecker.class.getName());
+			.getLogger(PhonUpdateChecker.class.getName());
 
 	/** Update application id */
 	private final static String APP_ID = "PHON_UPDATER";
 	private final static String BG_APP_ID = "PHON_SILENT_UPDATER";
 
-	public final static String UPDATE_URL = UpdateChecker.class.getName() + ".updateURL";
+	public final static String UPDATE_URL = PhonUpdateChecker.class.getName() + ".updateURL";
 	public final static String DEFAULT_UPDATE_URL = "https://www.phon.ca/downloads/phon/updates2.1.xml";
 
 	public final static String CHECK_FOR_UPDATE_PROP = "ca.phon.application.updater.checkOnStartup";

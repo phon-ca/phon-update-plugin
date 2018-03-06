@@ -14,12 +14,12 @@ public class UpdateStartupHook implements PhonStartupHook, IPluginExtensionPoint
 	
 	@Override
 	public void startup() throws PluginException {
-		if(PrefHelper.getBoolean(UpdateChecker.CHECK_FOR_UPDATE_PROP, UpdateChecker.DEFAULT_CHECK_FOR_UPDATE)) {
+		if(PrefHelper.getBoolean(PhonUpdateChecker.CHECK_FOR_UPDATE_PROP, PhonUpdateChecker.DEFAULT_CHECK_FOR_UPDATE)) {
 			final PhonWorker worker = PhonWorker.createWorker();
 			worker.setName("Automatic Updater");
 			worker.setFinishWhenQueueEmpty(true);
 			worker.invokeLater(() -> {
-				UpdateChecker.checkForUpdates(UpdateChecker.getUpdateURL(), true, true);
+				PhonUpdateChecker.checkForUpdates(PhonUpdateChecker.getUpdateURL(), true, true);
 			});
 			worker.start();
 		}
