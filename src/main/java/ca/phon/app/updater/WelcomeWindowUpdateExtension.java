@@ -2,6 +2,9 @@ package ca.phon.app.updater;
 
 import java.awt.*;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.nio.file.*;
 import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
@@ -15,12 +18,16 @@ import com.install4j.api.context.UserCanceledException;
 import com.install4j.api.launcher.*;
 import com.install4j.api.update.*;
 
+import ca.phon.app.log.BufferPanel;
+import ca.phon.app.log.BufferWindow;
 import ca.phon.app.log.LogUtil;
 import ca.phon.app.welcome.*;
 import ca.phon.app.welcome.WelcomeWindow.BtnBgPainter;
 import ca.phon.extensions.*;
 import ca.phon.plugin.*;
+import ca.phon.ui.CommonModuleFrame;
 import ca.phon.ui.MultiActionButton;
+import ca.phon.ui.action.PhonActionEvent;
 import ca.phon.ui.action.PhonUIAction;
 import ca.phon.ui.fonts.FontPreferences;
 import ca.phon.util.icons.*;
@@ -139,6 +146,13 @@ public class WelcomeWindowUpdateExtension implements ExtensionProvider {
     	}
     	updateButton.setDefaultAction(action);
     	
+    	final PhonUIAction showDetailsAct = new PhonUIAction(this, "showUpdateDetails", updateDescriptorEntry);
+    	showDetailsAct.putValue(PhonUIAction.SMALL_ICON, IconManager.getInstance().getIcon("categories/info-black", IconSize.SMALL));
+    	showDetailsAct.putValue(PhonUIAction.LARGE_ICON_KEY, IconManager.getInstance().getIcon("categories/info-black", IconSize.MEDIUM));
+    	showDetailsAct.putValue(PhonUIAction.SHORT_DESCRIPTION, "Show changelog");
+    	showDetailsAct.putValue(PhonUIAction.NAME, "More information");
+    	updateButton.addAction(showDetailsAct);
+    	
     	updateButton.setTopLabelText(WorkspaceTextStyler.toHeaderText("Version " + updateDescriptorEntry.getNewVersion() + " available"));
     	updateButton.setBottomLabelText(WorkspaceTextStyler.toDescText(action.getValue(Action.NAME).toString()));
     }
@@ -193,5 +207,31 @@ public class WelcomeWindowUpdateExtension implements ExtensionProvider {
 						LogUtil.severe(e);
 					} });
     	}
+    }
+    
+    public void showUpdateDetails(PhonActionEvent pae) {
+    	final UpdateDescriptorEntry entry = (UpdateDescriptorEntry)pae.getData();
+    	final BufferWindow buffers = BufferWindow.getInstance();
+    	final BufferPanel bufferPanel = buffers.createBuffer("Changelog " + entry.getNewVersion(), true);
+    	
+    	try {
+			final PrintWriter out = new PrintWriter
+					(new OutputStreamWriter(bufferPanel.getLogBuffer().getStdOutStream(), "UTF-8"));
+			out.println(entry.getComment());
+			out.flush();
+			out.close();
+			
+			bufferPanel.getLogBuffer().setCaretPosition(0);
+			
+			buffers.pack();
+			
+			buffers.setSize(CommonModuleFrame.getCurrentFrame().getWidth()-100, CommonModuleFrame.getCurrentFrame().getHeight()-50);
+			
+			buffers.setLocationRelativeTo(CommonModuleFrame.getCurrentFrame());
+			buffers.setVisible(true);
+		} catch (UnsupportedEncodingException e) {
+			LogUtil.severe(e.getLocalizedMessage(), e);
+		}
+    	
     }
 }
