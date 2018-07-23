@@ -65,7 +65,7 @@ public class WelcomeWindowUpdateExtension implements ExtensionProvider {
                     // That URL is defined on the "Installer->Auto Update Options" step.
                     // The same compiler variable is used by the "Check for update" actions that are contained in the update
                     // downloaders.
-                    String updateUrl = Variables.getCompilerVariable("sys.updatesUrl");
+                    String updateUrl = PhonUpdateChecker.getUpdateURL();
                     UpdateDescriptor updateDescriptor = UpdateChecker.getUpdateDescriptor(updateUrl, ApplicationDisplayMode.GUI);
                     // If getPossibleUpdateEntry returns a non-null value, the version number in the updates.xml file
                     // is greater than the version number of the local installation.

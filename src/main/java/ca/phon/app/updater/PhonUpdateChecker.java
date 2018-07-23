@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import ca.phon.app.VersionInfo;
 import ca.phon.util.PrefHelper;
 
 import com.install4j.api.launcher.ApplicationLauncher;
@@ -22,14 +23,17 @@ public class PhonUpdateChecker {
 	private final static String BG_APP_ID = "PHON_SILENT_UPDATER";
 
 	public final static String UPDATE_URL = PhonUpdateChecker.class.getName() + ".updateURL";
-	public final static String DEFAULT_UPDATE_URL = "https://www.phon.ca/downloads/phon/updates2.1.xml";
+	public final static String DEFAULT_UPDATE_URL = "https://phon-ca.github.io/phon/updates.xml";
+	public final static String DEFAULT_BETA_UPDATE_URL = "https://phon-ca.github.io/phon/updates-beta.xml";
 
 	public final static String CHECK_FOR_UPDATE_PROP = "ca.phon.application.updater.checkOnStartup";
 
 	public final static Boolean DEFAULT_CHECK_FOR_UPDATE = Boolean.TRUE;
 
 	public static String getUpdateURL() {
-		return PrefHelper.get(UPDATE_URL, DEFAULT_UPDATE_URL);
+		String defaultURL = VersionInfo.getInstance().getVersion().matches("[.0-9]+b[0-9]+") ? 
+				DEFAULT_BETA_UPDATE_URL : DEFAULT_UPDATE_URL;
+		return PrefHelper.get(UPDATE_URL, defaultURL);
 	}
 
 	/**
