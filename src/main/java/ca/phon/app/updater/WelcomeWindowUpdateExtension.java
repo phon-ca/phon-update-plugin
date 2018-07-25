@@ -61,10 +61,6 @@ public class WelcomeWindowUpdateExtension implements ExtensionProvider {
             new SwingWorker<UpdateDescriptorEntry, Object>() {
                 @Override
                 protected UpdateDescriptorEntry doInBackground() throws Exception {
-                    // The compiler variable sys.updatesUrl holds the URL where the updates.xml file is hosted.
-                    // That URL is defined on the "Installer->Auto Update Options" step.
-                    // The same compiler variable is used by the "Check for update" actions that are contained in the update
-                    // downloaders.
                     String updateUrl = PhonUpdateChecker.getUpdateURL();
                     UpdateDescriptor updateDescriptor = UpdateChecker.getUpdateDescriptor(updateUrl, ApplicationDisplayMode.GUI);
                     // If getPossibleUpdateEntry returns a non-null value, the version number in the updates.xml file

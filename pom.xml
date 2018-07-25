@@ -70,7 +70,7 @@
     <project.build.targetVersion>9</project.build.targetVersion>
 
 	<!-- Dependency versions -->
-	<com.install4j.install4j-runtime.version>7.0.1</com.install4j.install4j-runtime.version>
+	<com.install4j.install4j-runtime.version>7.0.6</com.install4j.install4j-runtime.version>
     <ca.phon.phon-app.version>3.0.0-SNAPSHOT</ca.phon.phon-app.version>
     
     <!-- Plugin versions -->
@@ -106,5 +106,5 @@
 
     </plugins>
   </build>
-  <version>10</version>
+  <version>11</version>
 </project>

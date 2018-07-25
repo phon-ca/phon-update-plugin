@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import ca.phon.app.VersionInfo;
+import ca.phon.ui.CommonModuleFrame;
 import ca.phon.util.PrefHelper;
 
 import com.install4j.api.launcher.ApplicationLauncher;
@@ -62,10 +63,11 @@ public class PhonUpdateChecker {
 	 */
 	public static void checkForUpdates(String updateURL, boolean silent, boolean checkInBackground) {
 		final String ID = (silent ? BG_APP_ID : APP_ID);
+		final String args[] = { "-VphonUpdatesUrl=" + PhonUpdateChecker.getUpdateURL() };
 		LOGGER.info("Running updater....");
 		try {
 			if(!checkInBackground) {
-				ApplicationLauncher.launchApplicationInProcess(ID, null, new ApplicationLauncher.Callback() {
+				ApplicationLauncher.launchApplicationInProcess(ID, args, new ApplicationLauncher.Callback() {
 		            public void exited(int exitValue) {
 		            	LOGGER.info("Update application exited with value " + exitValue);
 		            }
@@ -73,9 +75,9 @@ public class PhonUpdateChecker {
 		            public void prepareShutdown() {
 		            	LOGGER.info("Updater is shutting down application.");
 		            }
-		        }, ApplicationLauncher.WindowMode.FRAME, null);
+		        }, ApplicationLauncher.WindowMode.FRAME, CommonModuleFrame.getCurrentFrame());
 			} else {
-			    ApplicationLauncher.launchApplication(ID, null, false, new ApplicationLauncher.Callback() {
+			    ApplicationLauncher.launchApplication(ID, args, false, new ApplicationLauncher.Callback() {
 		            public void exited(int exitValue) {
 		            	LOGGER.info("Update application exited with value " + exitValue);
 		            }
