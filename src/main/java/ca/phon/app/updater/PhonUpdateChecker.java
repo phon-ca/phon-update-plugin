@@ -24,8 +24,8 @@ public class PhonUpdateChecker {
 	private final static String BG_APP_ID = "PHON_SILENT_UPDATER";
 
 	public final static String UPDATE_URL = PhonUpdateChecker.class.getName() + ".updateURL";
-	public final static String DEFAULT_UPDATE_URL = "https://phon-ca.github.io/phon/updates.xml";
-	public final static String DEFAULT_BETA_UPDATE_URL = "https://phon-ca.github.io/phon/updates-beta.xml";
+	public final static String DEFAULT_UPDATE_URL = "http://phon-ca.github.io/phon/updates.xml";
+	public final static String DEFAULT_BETA_UPDATE_URL = "http://phon-ca.github.io/phon/updates-beta.xml";
 
 	public final static String CHECK_FOR_UPDATE_PROP = "ca.phon.application.updater.checkOnStartup";
 

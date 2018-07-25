@@ -1,32 +1,31 @@
 package ca.phon.app.updater;
 
 import java.awt.Window;
+import java.util.logging.Level;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 
+import ca.phon.app.log.LogUtil;
 import ca.phon.plugin.IPluginExtensionFactory;
 import ca.phon.plugin.IPluginExtensionPoint;
 import ca.phon.plugin.IPluginMenuFilter;
 import ca.phon.plugin.PhonPlugin;
+import ca.phon.ui.menu.MenuBuilder;
 
 @PhonPlugin
 public class UpdateMenuHandler implements IPluginMenuFilter, IPluginExtensionPoint<IPluginMenuFilter> {
 
 	@Override
 	public void filterWindowMenu(Window owner, JMenuBar menu) {
-		JMenu helpMenu = null;
-		for(int i = 0; i < menu.getMenuCount(); i++) {
-			final JMenu m = menu.getMenu(i);
-			if(m.getText().equals("Help")) {
-				helpMenu = m;
-				break;
-			}
+		final MenuBuilder builder = new MenuBuilder(menu);
+		JMenu helpMenu = builder.getMenu("./Help");
+		if(helpMenu == null) {
+			helpMenu = builder.addMenu(".", "Help");
 		}
-		if(helpMenu == null) return;
 		
-		helpMenu.addSeparator();
-		helpMenu.add(new PhonUpdateCommand());
+		builder.addSeparator("./Help@^", "update");
+		builder.addItem("./Help@^", new PhonUpdateCommand());
 	}
 
 	@Override
