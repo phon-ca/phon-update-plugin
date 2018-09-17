@@ -30,6 +30,7 @@ import ca.phon.ui.MultiActionButton;
 import ca.phon.ui.action.PhonActionEvent;
 import ca.phon.ui.action.PhonUIAction;
 import ca.phon.ui.fonts.FontPreferences;
+import ca.phon.util.PrefHelper;
 import ca.phon.util.icons.*;
 
 @Extension(WelcomeWindow.class)
@@ -49,9 +50,9 @@ public class WelcomeWindowUpdateExtension implements ExtensionProvider {
 		welcomeWindow = WelcomeWindow.class.cast(obj);
 		
 		LogUtil.info("Checking for updates");
-//		if(PrefHelper.getBoolean(PhonUpdateChecker.CHECK_FOR_UPDATE_PROP, PhonUpdateChecker.DEFAULT_CHECK_FOR_UPDATE)) {
+		if(PrefHelper.getBoolean(PhonUpdateChecker.CHECK_FOR_UPDATE_PROP, PhonUpdateChecker.DEFAULT_CHECK_FOR_UPDATE)) {
 			checkForUpdateWithInstall4jApi();
-//		}
+		}
 	}
 
 	private void checkForUpdateWithInstall4jApi() {
