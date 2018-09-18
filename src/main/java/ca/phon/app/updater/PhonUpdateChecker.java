@@ -3,6 +3,8 @@ package ca.phon.app.updater;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import ca.phon.app.VersionInfo;
 import ca.phon.ui.CommonModuleFrame;
@@ -25,6 +27,7 @@ public class PhonUpdateChecker {
 
 	public final static String UPDATE_URL = PhonUpdateChecker.class.getName() + ".updateURL";
 	public final static String DEFAULT_UPDATE_URL = "http://phon-ca.github.io/phon/updates.xml";
+	public final static String DEFAULT_ALPHA_UPDATE_URL = "http://phon-ca.github.io/phon/updates-test.xml";
 	public final static String DEFAULT_BETA_UPDATE_URL = "http://phon-ca.github.io/phon/updates-beta.xml";
 
 	public final static String CHECK_FOR_UPDATE_PROP = "ca.phon.application.updater.checkOnStartup";
@@ -32,8 +35,16 @@ public class PhonUpdateChecker {
 	public final static Boolean DEFAULT_CHECK_FOR_UPDATE = Boolean.TRUE;
 
 	public static String getUpdateURL() {
-		String defaultURL = VersionInfo.getInstance().getVersion().matches("[.0-9]+b[0-9]+") ? 
-				DEFAULT_BETA_UPDATE_URL : DEFAULT_UPDATE_URL;
+		final String regex = "[.0-9]+(([ab])[0-9]+)?";
+		final Pattern pattern = Pattern.compile(regex);
+		final Matcher m = pattern.matcher(VersionInfo.getInstance().getVersion());
+		
+		String defaultURL = DEFAULT_UPDATE_URL;
+		if(m.matches() && m.group(2) != null) {
+			String tag = m.group(2);
+			if(tag.equals("a")) defaultURL = DEFAULT_ALPHA_UPDATE_URL;
+			else if(tag.equals("b")) defaultURL = DEFAULT_BETA_UPDATE_URL;
+		}
 		return PrefHelper.get(UPDATE_URL, defaultURL);
 	}
 
