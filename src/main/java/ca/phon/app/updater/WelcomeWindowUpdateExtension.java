@@ -164,7 +164,8 @@ public class WelcomeWindowUpdateExtension implements ExtensionProvider {
             protected Object doInBackground() throws Exception {
             	SwingUtilities.invokeLater( () -> { busyLabel.setVisible(true); busyLabel.setBusy(true); });
                 // Note the third argument which makes the call to the background updater blocking.
-                ApplicationLauncher.launchApplication("2363", null, true, null);
+            	final String args[] = { "-VphonUpdatesUrl=" + PhonUpdateChecker.getUpdateURL() };
+                ApplicationLauncher.launchApplication("2363", args, true, null);
                 // At this point the update downloader has returned and we can check if the "Schedule update installation"
                 // action has registered an update installer for execution
                 // We now switch to the EDT in done() for terminating the application
