@@ -209,7 +209,7 @@ public class WelcomeWindowUpdateExtension implements ExtensionProvider {
     
     public void showUpdateDetails(PhonActionEvent pae) {
     	final UpdateDescriptorEntry entry = (UpdateDescriptorEntry)pae.getData();
-    	final BufferWindow buffers = BufferWindow.getInstance();
+    	final BufferWindow buffers = BufferWindow.getBufferWindow();
     	final BufferPanel bufferPanel = buffers.createBuffer("Changelog " + entry.getNewVersion(), true);
     	
     	try {
