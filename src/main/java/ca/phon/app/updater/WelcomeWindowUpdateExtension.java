@@ -56,8 +56,8 @@ public class WelcomeWindowUpdateExtension implements ExtensionProvider {
 	}
 
 	private void checkForUpdateWithInstall4jApi() {
-		
-        if (Util.isWindows() || Util.isMacOS()) {
+		Path installationDirectory = Paths.get(String.valueOf(Variables.getInstallerVariable("sys.installationDir")));
+        if (Util.isWindows() || Util.isMacOS() ||  Files.isWritable(installationDirectory)) {
             // Here we check for updates in the background with the API.
             new SwingWorker<UpdateDescriptorEntry, Object>() {
                 @Override
