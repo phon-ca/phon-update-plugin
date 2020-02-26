@@ -57,7 +57,7 @@ public class WelcomeWindowUpdateExtension implements ExtensionProvider {
 
 	private void checkForUpdateWithInstall4jApi() {
 		
-        if (isInstallationDirWritable()) {
+        if (Util.isWindows() || Util.isMacOS()) {
             // Here we check for updates in the background with the API.
             new SwingWorker<UpdateDescriptorEntry, Object>() {
                 @Override
@@ -98,17 +98,6 @@ public class WelcomeWindowUpdateExtension implements ExtensionProvider {
         } else {
         	LogUtil.info("Canceling update check");
         }
-    }
-
-    private boolean isInstallationDirWritable() {
-        try {
-            Path installationDirectory = Paths.get(String.valueOf(Variables.getInstallerVariable("sys.installationDir")));
-            //only check writable on Unix because the installer requests privileges on Windows and macOS
-            return !Files.getFileStore(installationDirectory).isReadOnly() && (Util.isWindows() || Util.isMacOS() || Files.isWritable(installationDirectory));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return false;
     }
     
     private void addUpdateNotice(final UpdateDescriptorEntry updateDescriptorEntry, Action action) {
