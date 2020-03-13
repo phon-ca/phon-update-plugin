@@ -170,11 +170,13 @@ public class WelcomeWindowUpdateExtension implements ExtensionProvider {
                     if (UpdateChecker.isUpdateScheduled()) {
                     	updateButton.setBottomLabelText(WorkspaceTextStyler.toDescText("Click to update"));
                     } else {
-                        updateButton.setBottomLabelText(WorkspaceTextStyler.toDescText("Update could not be downloaded"));
+                    	updateButton.setBottomLabelText("Click to start update");
+                    	updateButton.setDefaultAction(new PhonUpdateCommand());
                     }
                 } catch (InterruptedException | ExecutionException e) {
                     Toolkit.getDefaultToolkit().beep();
-                    updateButton.setBottomLabelText(e.getLocalizedMessage());
+                    updateButton.setBottomLabelText("Click to start update");
+                    updateButton.setDefaultAction(new PhonUpdateCommand());
                     LogUtil.severe(e);
                 }
             }
