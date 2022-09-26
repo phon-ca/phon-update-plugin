@@ -73,7 +73,7 @@ public class WelcomeWindowUpdateExtension implements ExtensionProvider {
                 protected void done() {
                     try {
                         UpdateDescriptorEntry updateDescriptorEntry = get();
-                        final PhonUIAction executeUpdateAct = new PhonUIAction(WelcomeWindowUpdateExtension.this, "executeUpdate");
+                        final PhonUIAction<Void> executeUpdateAct = PhonUIAction.runnable(WelcomeWindowUpdateExtension.this::executeUpdate);
                         // only installers and single bundle archives on macOS are supported for background updates
                         if (updateDescriptorEntry != null && (!updateDescriptorEntry.isArchive() || updateDescriptorEntry.isSingleBundle())) {
                             if (!updateDescriptorEntry.isDownloaded()) {
@@ -132,7 +132,7 @@ public class WelcomeWindowUpdateExtension implements ExtensionProvider {
     	}
     	updateButton.setDefaultAction(action);
     	
-    	final PhonUIAction showDetailsAct = new PhonUIAction(this, "showUpdateDetails", updateDescriptorEntry);
+    	final PhonUIAction<UpdateDescriptorEntry> showDetailsAct = PhonUIAction.eventConsumer(this::showUpdateDetails, updateDescriptorEntry);
     	showDetailsAct.putValue(PhonUIAction.SMALL_ICON, IconManager.getInstance().getIcon("categories/info-black", IconSize.SMALL));
     	showDetailsAct.putValue(PhonUIAction.LARGE_ICON_KEY, IconManager.getInstance().getIcon("categories/info-black", IconSize.MEDIUM));
     	showDetailsAct.putValue(PhonUIAction.SHORT_DESCRIPTION, "Show changelog");
@@ -214,8 +214,8 @@ public class WelcomeWindowUpdateExtension implements ExtensionProvider {
     	}
     }
     
-    public void showUpdateDetails(PhonActionEvent pae) {
-    	final UpdateDescriptorEntry entry = (UpdateDescriptorEntry)pae.getData();
+    public void showUpdateDetails(PhonActionEvent<UpdateDescriptorEntry> pae) {
+    	final UpdateDescriptorEntry entry = pae.getData();
     	final BufferWindow buffers = BufferWindow.getBufferWindow();
     	final BufferPanel bufferPanel = buffers.createBuffer("Changelog " + entry.getNewVersion(), true);
     	
